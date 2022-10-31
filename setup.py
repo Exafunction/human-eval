@@ -6,11 +6,11 @@ from setuptools import setup, find_packages
 
 setup(
     name="human-eval",
-    py_modules=["human-eval"],
+    package_dir={"human_eval": ""},
     version="1.0",
     description="",
     author="OpenAI",
-    packages=find_packages(),
+    packages=["human_eval.human_eval", "human_eval.data"],
     install_requires=[
         str(r)
         for r in pkg_resources.parse_requirements(
@@ -21,5 +21,7 @@ setup(
         "console_scripts": [
             "evaluate_functional_correctness = human_eval.human_eval.evaluate_functional_correctness:main",
         ]
-    }
+    },
+    package_data={"": ["*.jsonl", "*.jsonl.gz"]},
+    include_package_data=True,
 )
