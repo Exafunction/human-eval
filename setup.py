@@ -1,7 +1,16 @@
 import os
 
-import pkg_resources
 from setuptools import setup, find_packages
+
+
+def parse_requirements(filename):
+    """Parse requirements from a file, ignoring comments and empty lines."""
+    with open(os.path.join(os.path.dirname(__file__), filename)) as f:
+        return [
+            line.strip()
+            for line in f
+            if line.strip() and not line.startswith("#")
+        ]
 
 
 setup(
@@ -11,12 +20,7 @@ setup(
     description="",
     author="OpenAI",
     packages=["human_eval.human_eval", "human_eval.data"],
-    install_requires=[
-        str(r)
-        for r in pkg_resources.parse_requirements(
-            open(os.path.join(os.path.dirname(__file__), "requirements.txt"))
-        )
-    ],
+    install_requires=parse_requirements("requirements.txt"),
     entry_points={
         "console_scripts": [
             "evaluate_functional_correctness = human_eval.human_eval.evaluate_functional_correctness:main",
